@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:servus_iap_flutter/servus_iap_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,13 +31,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  final ServusIapFlutter _servusIapFlutter = ServusIapFlutter();
+  String text = "";
 
   @override
   Widget build(BuildContext context) {
@@ -48,17 +44,16 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+          children: <Widget>[Text(text)],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () async {
+          final result = await _servusIapFlutter.helloWorld();
+          setState(() {
+            text = result;
+          });
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
