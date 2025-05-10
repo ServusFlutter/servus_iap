@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package servusflutter.iap;
+
+service PurchaseService {
+  rpc GetHelloWorld (HelloWorldRequest) returns (HelloWorldResponse) {}
+}
+
+message HelloWorldRequest {
+}
+
+message HelloWorldResponse {
+  string message = 1;
+}
