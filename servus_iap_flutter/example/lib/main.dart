@@ -31,7 +31,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final ServusIapFlutter _servusIapFlutter = ServusIapFlutter();
+  final ServusIapFlutter _servusIapFlutter = ServusIapFlutter(token: "abc");
   String text = "";
 
   @override
