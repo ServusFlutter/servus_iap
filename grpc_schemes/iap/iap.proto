@@ -2,13 +2,84 @@ syntax = "proto3";
 
 package servusflutter.iap;
 
+service OfferingsService {
+  rpc GetOfferings (GetOfferingsRequest) returns (GetOfferingsResponse) {}
+}
+
+message GetOfferingsRequest {
+}
+
+message GetOfferingsResponse {
+  string platform = 1;
+  string attributes = 2;
+  repeated string planProductIds = 3;
+  repeated string otpProductIds = 4;
+}
+
 service PurchaseService {
-  rpc GetHelloWorld (HelloWorldRequest) returns (HelloWorldResponse) {}
+  rpc PurchaseApple (PurchaseAppleRequest) returns (PurchaseResponse) {}
+  rpc PurchaseAppleOtp (PurchaseAppleRequest) returns (PurchaseResponse) {}
+  rpc PurchaseGoogle (PurchaseGoogleRequest) returns (PurchaseResponse) {}
+  rpc PurchaseGoogleOtp (PurchaseGoogleOtpRequest) returns (PurchaseResponse) {}
 }
 
-message HelloWorldRequest {
+message PurchaseAppleRequest {
+  string transactionId = 1;
 }
 
-message HelloWorldResponse {
-  string message = 1;
+message PurchaseGoogleRequest {
+  string productId = 1;
+  string purchaseId = 2;
+  string purchaseToken = 3;
+  string basePlanId = 4;
+}
+
+message PurchaseGoogleOtpRequest {
+  string productId = 1;
+  string purchaseId = 2;
+  string purchaseToken = 3;
+  string priceAmountMicros = 4;
+  string priceCurrencyCode = 5;
+}
+
+message PurchaseResponse {
+  repeated Plan plans = 1;
+  repeated Otp otps = 2;
+}
+
+message Plan {
+  string productId = 1;
+  string planId = 2;
+  string purchaseDate = 3;
+  string endDate = 4;
+  string entitlement = 5;
+  StoreType storeType = 6;
+  bool isTrial = 7;
+  Period duration = 8;
+  string attributes = 9;
+}
+message Otp {
+  string productId = 1;
+  string planId = 2;
+  string purchaseDate = 3;
+  string entitlement = 4;
+  StoreType storeType = 5;
+  string attributes = 6;
+}
+
+enum StoreType {
+  APPLE = 0;
+  GOOGLE = 1;
+}
+
+message Period{
+  int32 amount = 1;
+  PeriodUnit unit = 2;
+}
+
+enum PeriodUnit{
+  DAYS = 0;
+  WEEKS = 1;
+  MONTHS = 2;
+  YEARS = 3;
 }
